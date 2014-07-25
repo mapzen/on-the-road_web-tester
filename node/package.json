@@ -1,0 +1,14 @@
+{
+  "name": "on-the-road_web-tester",
+  "version": "0.0.1",
+  "description": "server component for on-the-road web tester",
+  "dependencies": {
+    "express": "4.3.1",
+    "mysql" : "2.4.1",
+    "zmq" : "2.7.0",
+    "jade" : "1.4.2",
+    "sqlite3" : "2.2.4",
+    "polyline-encoded" : "0.0.4",
+    "mongoose" : "3.8.13"
+  }
+}
