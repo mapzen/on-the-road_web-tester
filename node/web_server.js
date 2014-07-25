@@ -13,9 +13,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.get('/', function(req, res) {
-    res.render('index', {
-        route_id: req.query.route_id
-    });
+    var routeId = req.query.route_id;
+    Route
+        .find({})
+        .exec(function(err, route) {
+            res.render('index', {
+                route_id: routeId || route[0]._id,
+                routes: route
+            });
+        });
 });
 
 app.get('/data', function(req, res) {
