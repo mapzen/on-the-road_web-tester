@@ -1,0 +1,13 @@
+site 'http://community.opscode.com/api/v1'
+
+cookbook 'java'
+cookbook 'package_installer'
+cookbook 'maven'
+cookbook 'sudo'
+cookbook 'apt'
+cookbook 'ohai'
+cookbook 'git'
+cookbook 'nodejs'
+cookbook 'mongodb'
+cookbook 'zeromq'
+cookbook 'nginx'
