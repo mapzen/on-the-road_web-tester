@@ -1,7 +1,5 @@
 package com.mapzen;
 
-import com.mapzen.osrm.Route;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.zeromq.ZMQ;
