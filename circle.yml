@@ -10,3 +10,7 @@ machine:
 test:
   override:
     - cd java; mvn clean compile install assembly:single
+
+general:
+  artifacts:
+    - "java/target"
