@@ -9,7 +9,13 @@ machine:
 
 test:
   override:
-    - cd java; mvn clean compile install assembly:single
+    - cd java; mvn clean compile install assembly:single -P upload -Ds3.accessKey=$S3_ACCESS_KEY -Ds3.secretKey=$S3_SECRET_KEY
+
+deployment:
+  latest:
+    branch: master
+    commands:
+      - cd java; mvn s3-upload:s3-upload -P upload -Ds3.accessKey=$S3_ACCESS_KEY -Ds3.secretKey=$S3_SECRET_KEY
 
 general:
   artifacts:

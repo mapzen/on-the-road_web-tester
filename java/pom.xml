@@ -84,8 +84,39 @@
                     </descriptorRefs>
                 </configuration>
             </plugin>
+</plugins>
+</build>
+
+  <profiles>
+        <profile>
+            <id>upload</id>
+            <build>
+                <plugins>
+
+            <plugin>
+                <groupId>com.bazaarvoice.maven.plugins</groupId>
+                <artifactId>s3-upload-maven-plugin</artifactId>
+                <version>1.2</version>
+                <configuration>
+                    <bucketName>android.mapzen.com</bucketName>
+                    <source>target/${project.build.finalName}-jar-with-dependencies.jar</source>
+                    <destination>on-the-road-with-deps-latest.jar</destination>
+                    <accessKey>${s3.accessKey}</accessKey>
+                    <secretKey>${s3.secretKey}</secretKey>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>assembly</phase>
+                        <goals>
+                            <goal>s3-upload</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+</profile>
+</profiles>
 
     <dependencies>
         <dependency>
