@@ -11,6 +11,7 @@ SITE
       rsyslog (>= 0.0.0)
     build-essential (2.0.4)
     chef_handler (1.1.6)
+    control_groups (0.1.6)
     dmg (2.2.0)
     git (4.0.2)
       build-essential (>= 0.0.0)
@@ -20,6 +21,7 @@ SITE
       yum (~> 3.0)
       yum-epel (>= 0.0.0)
     java (1.22.0)
+    logrotate (1.6.0)
     maven (1.1.0)
       ark (~> 0.4)
       java (~> 1.13)
@@ -44,6 +46,9 @@ SITE
     python (1.4.6)
       build-essential (>= 0.0.0)
       yum-epel (>= 0.0.0)
+    rc_mon (0.2.0)
+      control_groups (>= 0.0.0)
+      runit (>= 0.0.0)
     rsyslog (1.12.2)
     runit (1.5.10)
       build-essential (>= 0.0.0)
@@ -60,6 +65,15 @@ SITE
       build-essential (>= 0.0.0)
       yum (>= 0.0.0)
 
+PATH
+  remote: custom-cookbooks/on-the-road_java-runner
+  specs:
+    on-the-road_java-runner (0.1.1)
+      apt (>= 0.0.0)
+      java (>= 0.0.0)
+      logrotate (>= 0.0.0)
+      rc_mon (>= 0.0.0)
+
 DEPENDENCIES
   apt (>= 0)
   git (>= 0)
@@ -69,6 +83,7 @@ DEPENDENCIES
   nginx (>= 0)
   nodejs (>= 0)
   ohai (>= 0)
+  on-the-road_java-runner (>= 0)
   package_installer (>= 0)
   sudo (>= 0)
   zeromq (>= 0)

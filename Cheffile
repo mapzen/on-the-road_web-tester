@@ -11,3 +11,7 @@ cookbook 'nodejs'
 cookbook 'mongodb'
 cookbook 'zeromq'
 cookbook 'nginx'
+
+%w( on-the-road_java-runner ).each do |cb|
+  cookbook cb, path: "custom-cookbooks/#{cb}"
+end

@@ -4,7 +4,6 @@
   "description": "server component for on-the-road web tester",
   "dependencies": {
     "express": "4.3.1",
-    "mysql" : "2.4.1",
     "zmq" : "2.7.0",
     "jade" : "1.4.2",
     "sqlite3" : "2.2.4",

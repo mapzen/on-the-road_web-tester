@@ -9,6 +9,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box     = 'ubuntu-14.04-official'
   config.vm.box_url = 'https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box'
 
+  config.vm.network :private_network, ip: "33.33.33.10"
+  config.vm.network :forwarded_port, host: 8080, guest: 80
+  config.vm.network :forwarded_port, host: 8000, guest: 8000
+
   config.vm.provision "chef_solo" do |chef|
   chef.cookbooks_path = "cookbooks"
   #   chef.roles_path = "../my-recipes/roles"
@@ -56,7 +60,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     "recipe[nodejs]",
     "recipe[mongodb]",
     "recipe[zeromq]",
-    "recipe[nginx]"
+    "recipe[nginx]",
+    "recipe[on-the-road_java-runner::java]",
+    "recipe[on-the-road_java-runner::node]"
   ]
   end
 end
