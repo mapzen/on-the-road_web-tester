@@ -1,3 +1,5 @@
+include_recipe "runit"
+
 directory "/work" do
   owner 'vagrant'
   group 'vagrant'

@@ -8,6 +8,6 @@ description      "cookbook"
   supports os
 end
 
-%w[npm apt logrotate java].each do |cb|
+%w[runit apt logrotate java].each do |cb|
   depends cb
 end

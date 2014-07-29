@@ -1,3 +1,4 @@
+include_recipe "runit"
 include_recipe 'logrotate'
 include_recipe 'java'
 

@@ -47,6 +47,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "users" => ["vagrant"],
         "passwordless" => true
       }
+    },
+    "nginx" => {
+      "user" => "vagrant"
     }
   }
   chef.run_list = [
@@ -62,7 +65,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     "recipe[zeromq]",
     "recipe[nginx]",
     "recipe[on-the-road_java-runner::java]",
-    "recipe[on-the-road_java-runner::node]"
+    "recipe[on-the-road_java-runner::node]",
+    "recipe[on-the-road_java-runner::nginx]"
   ]
   end
 end
