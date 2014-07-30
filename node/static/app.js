@@ -1,10 +1,18 @@
-var dropDot = function(theMap, lat, lng, color) {
+var dropDot = function(theMap, lat, lng, color, extraInfo) {
     L.marker([lat, lng], {
         icon: L.divIcon({
             className: 'count-icon-' + color,
             html: "",
             iconSize: [10, 10]
         })
+    }).on('mouseover', function(e) {
+        if (extraInfo) {
+            var popup = L.popup().setLatLng(e.latlng) 
+                .setContent("location: " + e.latlng.toString() 
+                             + "speed: " + extraInfo.speed 
+                             + ", bearing: " + extraInfo.bearing)
+                .openOn(theMap);
+        }
     }).addTo(theMap);
 }
 
@@ -46,7 +54,7 @@ $(function() {
     } else {
         $.each(window.locs, function(index, value) {
             dropDot(map, value.corrected_lat, value.corrected_lng, 'red');
-            dropDot(map, value.lat, value.lng, 'blue');
+            dropDot(map, value.lat, value.lng, 'blue', {bearing: value.bearing, speed: value.speed});
         })
     }
 
