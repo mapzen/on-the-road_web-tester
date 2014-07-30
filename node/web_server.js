@@ -87,6 +87,8 @@ var Location = mongoose.model('Location', mongoose.Schema({
     instruction_bearing: Number,
     alt: String,
     acc: Number,
+    bearing: Number,
+    speed: Number,
     time: Date,
     route_id: {
         type: String,
@@ -117,17 +119,17 @@ app.post('/upload', function(req, res) {
     db.each("select * from routes", function(err, row) {
         var route = new Route(row);
         route.save(function(err) {
-            db.each("select * from locations where route_id = " + route._id, function(err, row) {
+            db.each("select * from locations where route_id = ?",  route._id, function(err, row) {
                 delete row.route_id;
                 delete row._id;
                 row.route_id = route._id;
                 var loc = new Location(row);
-                loc.save(saveNotice);
+                loc.save(saveCallback);
                 route.locations.push(loc);
                 route.save(saveCallback);
             });
 
-            db.each("select * from route_geometry where route_id = " + route._id, function(err, row) {
+            db.each("select * from route_geometry where route_id = ?", route._id, function(err, row) {
                 delete row.route_id;
                 delete row._id;
                 row.route_id = route._id;
