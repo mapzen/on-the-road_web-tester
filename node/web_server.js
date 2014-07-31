@@ -6,7 +6,15 @@ var app = express();
 var http = require('http').Server(app);
 var sqlite3 = require('sqlite3').verbose();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://0.0.0.0/on_the_road');
+
+var config = require('./config.json');
+
+mongoose.connect(config.mongodb);
+
+var models = require('./models.js'),
+  Route = models.Route,
+  Location = models.Location,
+  RouteGeometry = models.RouteGeometry;
 
 app.use("/static", express.static(path.join(__dirname, '/static')));
 app.set('views', path.join(__dirname, 'views'));
@@ -41,7 +49,7 @@ app.get('/data', function(req, res) {
 
 app.get('/snap', function(req, res) {
     var requester = zmq.socket('req');
-    requester.connect("tcp://0.0.0.0:5555");
+    requester.connect(config.zmq);
     requester.on("message", function(reply) {
         console.log('testing');
         console.log(reply.toString());
@@ -60,52 +68,6 @@ app.get('/snap', function(req, res) {
             }));
         });
 });
-
-var Route = mongoose.model('Route', mongoose.Schema({
-    _id: String,
-    uploaded: Number,
-    ready_for_upload: Number,
-    raw: String,
-    locations: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Location'
-    }],
-    geometries: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'RouteGeometry'
-    }]
-}));
-
-var Location = mongoose.model('Location', mongoose.Schema({
-    lat: Number,
-    lng: Number,
-    provider: String,
-    corrected_lat: Number,
-    corrected_lng: Number,
-    instruction_lat: Number,
-    instruction_lng: Number,
-    instruction_bearing: Number,
-    alt: String,
-    acc: Number,
-    bearing: Number,
-    speed: Number,
-    time: Date,
-    route_id: {
-        type: String,
-        ref: 'Route'
-    },
-    dump: String
-}));
-
-var RouteGeometry = mongoose.model('RouteGeometry', mongoose.Schema({
-    route_id: {
-        type: String,
-        ref: 'Route'
-    },
-    position: Number,
-    lat: Number,
-    lng: Number
-}));
 
 var saveCallback = function(err) {
     if (err) {
@@ -135,7 +97,7 @@ app.post('/upload', function(req, res) {
                 row.route_id = route._id;
                 var rg = new RouteGeometry(row);
                 route.geometries.push(rg);
-                route.save(saveNotice);
+                route.save(saveCallback);
                 rg.save(saveCallback);
             });
 
@@ -144,6 +106,6 @@ app.post('/upload', function(req, res) {
     res.send("ok");
 });
 
-http.listen(3000, function() {
+http.listen(config.http.port, config.http.ip, function() {
     console.log('listening on *:3000');
 });

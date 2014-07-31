@@ -1,0 +1,8 @@
+{
+	"mongodb": "mongodb://0.0.0.0/on_the_road",
+	"zmq": "tcp://0.0.0.0:5555",
+	"http": {
+		"port": 3000,
+		"ip": "0.0.0.0"
+	}
+}
